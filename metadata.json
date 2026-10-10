@@ -1,0 +1,6 @@
+{
+  "name": "Chennai Public School — SmartHub",
+  "description": "Empowering Students. Enabling Teachers. Connecting the School. Complete integrated digital school management platform with Student, Teacher, and Admin portals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
