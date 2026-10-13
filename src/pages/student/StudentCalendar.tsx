@@ -49,9 +49,9 @@ export const StudentCalendar: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl student-card-glass border-t-4 border-amber-500 shadow-lg">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
             Campus Almanac
           </span>
           <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-0.5">
@@ -63,18 +63,18 @@ export const StudentCalendar: React.FC = () => {
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-600 dark:text-slate-400">
+        <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-600 dark:text-slate-400 p-2 rounded-xl bg-slate-100/60 dark:bg-slate-800/60">
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500" /> Exam
+            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-xs" /> Exam
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-sky-500" /> Deadline
+            <span className="w-2.5 h-2.5 rounded-full bg-sky-500 shadow-xs" /> Deadline
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" /> Event
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-xs" /> Event
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" /> Holiday
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-xs" /> Holiday
           </span>
         </div>
       </div>
@@ -84,17 +84,26 @@ export const StudentCalendar: React.FC = () => {
         {calendarEvents.map((evt) => {
           const badgeColor =
             evt.type === 'exam'
-              ? 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border-rose-200'
+              ? 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border-rose-300'
               : evt.type === 'assignment'
-              ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border-sky-200'
+              ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border-sky-300'
               : evt.type === 'holiday'
-              ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-200'
-              : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border-emerald-200';
+              ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-300'
+              : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border-emerald-300';
+
+          const topBorderColor =
+            evt.type === 'exam'
+              ? 'border-t-4 border-rose-500'
+              : evt.type === 'assignment'
+              ? 'border-t-4 border-sky-500'
+              : evt.type === 'holiday'
+              ? 'border-t-4 border-amber-500'
+              : 'border-t-4 border-emerald-500';
 
           return (
             <div
               key={evt.id}
-              className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 flex flex-col justify-between"
+              className={`p-5 rounded-3xl student-card-glass shadow-sm space-y-3 flex flex-col justify-between hover:scale-[1.01] transition-transform ${topBorderColor}`}
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">

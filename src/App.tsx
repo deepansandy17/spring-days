@@ -18,6 +18,7 @@ import { StudentMaterials } from './pages/student/StudentMaterials';
 import { StudentCommunication } from './pages/student/StudentCommunication';
 import { StudentAnnouncements } from './pages/student/StudentAnnouncements';
 import { StudentProfile as StudentProfilePage } from './pages/student/StudentProfile';
+import { StudentPortalContainer } from './components/student/StudentPortalContainer';
 
 // Teacher Pages
 import { TeacherDashboard } from './pages/teacher/TeacherDashboard';
@@ -159,10 +160,10 @@ const AppContent: React.FC = () => {
       };
 
       return (
-        <>
+        <StudentPortalContainer currentPath={currentPath} onNavigate={navigate}>
           {adminSupervisionBanner}
           {studentView()}
-        </>
+        </StudentPortalContainer>
       );
     }
 

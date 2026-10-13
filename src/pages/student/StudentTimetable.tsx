@@ -33,10 +33,10 @@ export const StudentTimetable: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl student-card-glass border-t-4 border-indigo-500 shadow-lg">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
-            Schedule
+          <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+            Instructional Schedule
           </span>
           <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-0.5">
             Class Timetable (Grade {currentStudent.class}-{currentStudent.section})
@@ -128,7 +128,7 @@ export const StudentTimetable: React.FC = () => {
         </div>
       ) : (
         /* WEEKLY GRID VIEW */
-        <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs overflow-x-auto">
+        <div className="p-6 rounded-3xl student-card-glass shadow-sm overflow-x-auto">
           <table className="w-full text-xs min-w-[700px]">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-500">

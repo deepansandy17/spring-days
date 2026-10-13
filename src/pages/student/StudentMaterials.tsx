@@ -56,9 +56,9 @@ export const StudentMaterials: React.FC = () => {
       )}
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl student-card-glass border-t-4 border-emerald-500 shadow-lg">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
             Digital Repository
           </span>
           <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-0.5">
@@ -77,7 +77,7 @@ export const StudentMaterials: React.FC = () => {
             placeholder="Search resources..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs focus:outline-hidden focus:border-sky-500"
+            className="w-full pl-9 pr-3 py-2 bg-white/70 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60 rounded-xl text-xs focus:outline-hidden focus:border-emerald-500"
           />
         </div>
       </div>
@@ -88,10 +88,10 @@ export const StudentMaterials: React.FC = () => {
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-colors ${
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
               selectedCategory === cat
-                ? 'bg-sky-600 text-white shadow-xs'
-                : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50'
+                ? 'bg-emerald-600 text-white shadow-xs font-bold'
+                : 'bg-white/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 hover:bg-slate-50'
             }`}
           >
             {cat}
@@ -104,7 +104,7 @@ export const StudentMaterials: React.FC = () => {
         {filtered.map((mat) => (
           <div
             key={mat.id}
-            className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between space-y-4 hover:border-slate-300 dark:hover:border-slate-700 transition-all"
+            className="p-5 rounded-3xl student-card-glass border-t-4 border-emerald-500 shadow-sm flex flex-col justify-between space-y-4 hover:border-emerald-400/80 transition-all hover:scale-[1.01]"
           >
             <div className="space-y-2">
               <div className="flex items-center justify-between gap-2">

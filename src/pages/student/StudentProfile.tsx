@@ -99,9 +99,9 @@ export const StudentProfile: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-6 rounded-3xl student-card-glass border-t-4 border-indigo-500 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
             Account Management & Profile Settings
           </span>
           <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-0.5">
@@ -122,13 +122,13 @@ export const StudentProfile: React.FC = () => {
 
       {/* Onboarding Banner for Newly Joined Students */}
       {activeStudent.isNewlyJoined && (
-        <div className="p-4 rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800 text-sky-950 dark:text-sky-100 flex items-start gap-3 shadow-xs">
-          <Sparkles className="w-5 h-5 text-sky-600 dark:text-sky-400 shrink-0 mt-0.5" />
+        <div className="p-4 rounded-2xl bg-indigo-50/90 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 text-indigo-950 dark:text-indigo-100 flex items-start gap-3 shadow-xs">
+          <Sparkles className="w-5 h-5 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
           <div className="space-y-1 text-xs">
             <p className="font-bold text-sm">
-              Welcome to Chennai Public School SmartHub!
+              Welcome to Cambridge Public School SmartHub!
             </p>
-            <p className="text-sky-800 dark:text-sky-300 leading-relaxed">
+            <p className="text-indigo-800 dark:text-indigo-300 leading-relaxed">
               Your student entry account was registered by School Administration with Student ID <strong className="font-mono">{activeStudent.studentId}</strong>. You can customize your profile information, contact numbers, and update your security password below.
             </p>
           </div>
@@ -137,7 +137,7 @@ export const StudentProfile: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: ID Card */}
-        <div className="lg:col-span-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4 text-center">
+        <div className="lg:col-span-4 p-6 rounded-3xl student-card-glass space-y-4 text-center">
           <div className="w-24 h-24 rounded-2xl mx-auto overflow-hidden border-2 border-sky-500/30 shadow-md">
             <img
               src={activeStudent.avatar}
@@ -184,7 +184,7 @@ export const StudentProfile: React.FC = () => {
         {/* Right Column: Editable Profile Details & Security */}
         <div className="lg:col-span-8 space-y-6">
           {/* Personal & Contact Details Card */}
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <div className="p-6 rounded-3xl student-card-glass space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-display font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
                 <Edit3 className="w-4 h-4 text-sky-600 dark:text-sky-400" />
@@ -365,7 +365,7 @@ export const StudentProfile: React.FC = () => {
           </div>
 
           {/* Change Security Password */}
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <div className="p-6 rounded-3xl student-card-glass space-y-4">
             <div>
               <h3 className="font-display font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
                 <Key className="w-4 h-4 text-sky-600 dark:text-sky-400" />

@@ -38,3 +38,128 @@
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
+
+/* Premium Student Portal Background Animations */
+@keyframes student-orb-float-1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(45px, -50px) scale(1.18);
+  }
+  66% {
+    transform: translate(-35px, 35px) scale(0.92);
+  }
+}
+
+@keyframes student-orb-float-2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-50px, 40px) scale(1.12);
+  }
+  66% {
+    transform: translate(40px, -45px) scale(0.88);
+  }
+}
+
+@keyframes student-orb-float-3 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(30px, 60px) scale(1.25);
+  }
+}
+
+@keyframes student-sparkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.15);
+  }
+}
+
+.animate-student-orb-1 {
+  animation: student-orb-float-1 20s ease-in-out infinite;
+}
+
+.animate-student-orb-2 {
+  animation: student-orb-float-2 25s ease-in-out infinite;
+}
+
+.animate-student-orb-3 {
+  animation: student-orb-float-3 28s ease-in-out infinite;
+}
+
+.animate-student-sparkle {
+  animation: student-sparkle 4s ease-in-out infinite;
+}
+
+/* Frosted glass cards with colorful radiance */
+.student-card-glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+.dark .student-card-glass {
+  background: rgba(15, 23, 42, 0.84);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(99, 102, 241, 0.15);
+}
+
+@keyframes rainbow-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-rainbow-text {
+  background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899, #06b6d4, #10b981, #6366f1);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-shimmer 6s ease infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4), 0 0 30px rgba(168, 85, 247, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.7), 0 0 45px rgba(168, 85, 247, 0.4);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+

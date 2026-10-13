@@ -17,10 +17,10 @@ export const StudentAnnouncements: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl student-card-glass border-t-4 border-indigo-500 shadow-lg">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
-            Official Circulars
+          <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+            Official Circulars & School Board
           </span>
           <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-0.5">
             School Notices & Circulars
@@ -38,7 +38,7 @@ export const StudentAnnouncements: React.FC = () => {
             placeholder="Search circulars..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs focus:outline-hidden focus:border-sky-500"
+            className="w-full pl-9 pr-3 py-2 bg-white/70 dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-700/60 rounded-xl text-xs focus:outline-hidden focus:border-indigo-500"
           />
         </div>
       </div>
@@ -47,10 +47,10 @@ export const StudentAnnouncements: React.FC = () => {
         {filtered.map((ann) => (
           <div
             key={ann.id}
-            className={`p-6 rounded-2xl bg-white dark:bg-slate-900 border shadow-xs space-y-3 transition-all ${
+            className={`p-6 rounded-3xl student-card-glass space-y-3 transition-all ${
               ann.isPinned
-                ? 'border-sky-300 dark:border-sky-800 ring-1 ring-sky-500/10'
-                : 'border-slate-200 dark:border-slate-800'
+                ? 'border-indigo-300 dark:border-indigo-700 ring-2 ring-indigo-500/20 shadow-md'
+                : 'shadow-xs'
             }`}
           >
             <div className="flex items-center justify-between gap-2">

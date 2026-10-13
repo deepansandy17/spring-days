@@ -23,7 +23,7 @@ export const StudentCommunication: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
+      <div className="p-6 rounded-3xl student-card-glass border-t-4 border-sky-500 shadow-lg">
         <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
           Faculty Communication
         </span>
@@ -37,7 +37,7 @@ export const StudentCommunication: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Messages Feed */}
-        <div className="lg:col-span-7 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+        <div className="lg:col-span-7 p-6 rounded-3xl student-card-glass space-y-4">
           <h3 className="font-display font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
             <MessageSquare className="w-4 h-4 text-sky-600 dark:text-sky-400" />
             <span>Consultation Thread</span>
@@ -52,10 +52,10 @@ export const StudentCommunication: React.FC = () => {
                 return (
                   <div
                     key={msg.id}
-                    className={`p-4 rounded-xl border text-xs space-y-1.5 ${
+                    className={`p-4 rounded-2xl border text-xs space-y-1.5 ${
                       isMe
-                        ? 'bg-sky-50/70 dark:bg-sky-950/30 border-sky-200 dark:border-sky-800 ml-6'
-                        : 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 mr-6'
+                        ? 'bg-sky-50/80 dark:bg-sky-950/40 border-sky-200 dark:border-sky-800 ml-6 shadow-xs'
+                        : 'bg-white/80 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 mr-6 shadow-xs'
                     }`}
                   >
                     <div className="flex items-center justify-between text-[11px]">
@@ -78,7 +78,7 @@ export const StudentCommunication: React.FC = () => {
         </div>
 
         {/* Compose Form */}
-        <div className="lg:col-span-5 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+        <div className="lg:col-span-5 p-6 rounded-3xl student-card-glass space-y-4">
           <h3 className="font-display font-bold text-base text-slate-900 dark:text-white">
             Send Message to Teacher
           </h3>
