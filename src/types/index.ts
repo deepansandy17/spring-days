@@ -28,6 +28,8 @@ export interface StudentProfile extends User {
   feesPaid: number;
   isNewlyJoined?: boolean;
   password?: string;
+  bio?: string;
+  extracurriculars?: string;
 }
 
 export interface TeacherProfile extends User {
@@ -40,6 +42,8 @@ export interface TeacherProfile extends User {
   leaveBalance: { casual: number; medical: number; duty: number };
   isNewlyJoined?: boolean;
   password?: string;
+  bio?: string;
+  officeHours?: string;
 }
 
 export interface AdminProfile extends User {

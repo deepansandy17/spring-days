@@ -77,22 +77,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
             Administrative ERP Overview
           </h1>
           <p className="text-xs sm:text-sm text-indigo-200/90 leading-relaxed">
-            School operations running nominal. Currently monitoring 500 active students, 30 faculty members, and real-time fee and attendance registries.
+            School operations running nominal. As School Admin Staff, you have full institutional clearance to inspect the IDs, credentials, and dossiers of all <strong>500 students</strong> and <strong>30 faculty teachers</strong>, supervise both portals, and onboard new members.
           </p>
           <div className="pt-2 flex flex-wrap gap-2.5">
             <button
               onClick={() => onNavigate('/admin/students')}
               className="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-semibold shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <UserPlus className="w-3.5 h-3.5" />
-              <span>Add Newly Joined Student</span>
+              <Users className="w-3.5 h-3.5" />
+              <span>Inspect All 500 Students & IDs</span>
             </button>
             <button
               onClick={() => onNavigate('/admin/teachers')}
               className="px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <GraduationCap className="w-3.5 h-3.5" />
-              <span>Add Newly Joined Teacher</span>
+              <span>Inspect All 30 Teachers & IDs</span>
             </button>
             <button
               onClick={() => {
@@ -122,21 +122,33 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
 
       {/* 6 Metric KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
-          <span className="text-[11px] text-slate-500 block">Total Students</span>
+        <button
+          onClick={() => onNavigate('/admin/students')}
+          className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-1 text-left hover:border-sky-500 transition-all cursor-pointer group"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] text-slate-500 group-hover:text-sky-600 font-medium">All Students</span>
+            <Users className="w-3.5 h-3.5 text-sky-500" />
+          </div>
           <p className="font-display font-extrabold text-2xl text-slate-900 dark:text-white tabular-nums">
             {totalStudents}
           </p>
-          <span className="text-[10px] text-emerald-600 font-semibold">100% Enrolled</span>
-        </div>
+          <span className="text-[10px] text-emerald-600 font-semibold">Admin: Full 500 IDs</span>
+        </button>
 
-        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
-          <span className="text-[11px] text-slate-500 block">Total Faculty</span>
+        <button
+          onClick={() => onNavigate('/admin/teachers')}
+          className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-1 text-left hover:border-blue-500 transition-all cursor-pointer group"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] text-slate-500 group-hover:text-blue-600 font-medium">All Faculty</span>
+            <GraduationCap className="w-3.5 h-3.5 text-blue-500" />
+          </div>
           <p className="font-display font-extrabold text-2xl text-slate-900 dark:text-white tabular-nums">
             {totalTeachers}
           </p>
-          <span className="text-[10px] text-sky-600 font-semibold">30 Active Staff</span>
-        </div>
+          <span className="text-[10px] text-sky-600 font-semibold">Admin: Full 30 IDs</span>
+        </button>
 
         <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-1">
           <span className="text-[11px] text-slate-500 block">Active Sections</span>
@@ -292,7 +304,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
                     )}
                   </div>
                   <span className="text-[10px] text-slate-400">
-                    Grade {stu.class}-{stu.section} · {stu.studentId}
+                    Grade {stu.class}-{stu.section} · ID: <strong className="text-slate-700 dark:text-slate-300 font-mono">{stu.studentId}</strong>
+                    {stu.password && (
+                      <span className="ml-1 text-sky-600 dark:text-sky-400 font-mono">
+                        (Pass: {stu.password})
+                      </span>
+                    )}
                   </span>
                 </div>
                 <button
@@ -325,7 +342,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onNavigate }) =>
                     )}
                   </div>
                   <span className="text-[10px] text-slate-400">
-                    {t.department} · {t.employeeId}
+                    {t.department} · ID: <strong className="text-slate-700 dark:text-slate-300 font-mono">{t.employeeId}</strong>
+                    {t.password && (
+                      <span className="ml-1 text-blue-600 dark:text-blue-400 font-mono">
+                        (Pass: {t.password})
+                      </span>
+                    )}
                   </span>
                 </div>
                 <button

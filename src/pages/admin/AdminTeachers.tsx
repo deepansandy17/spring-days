@@ -41,8 +41,12 @@ export const AdminTeachers: React.FC = () => {
     email: '',
     assignedClass: '10',
     assignedSection: 'A',
-    subject: 'Mathematics'
+    subject: 'Mathematics',
+    assignedEmployeeId: `CPS-T-${131 + teachers.length}`,
+    assignedPassword: 'Teacher@123'
   });
+
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
 
   const filteredTeachers = teachers.filter(
     (t) =>
@@ -61,10 +65,12 @@ export const AdminTeachers: React.FC = () => {
     const cleanName = newTeacher.name.trim();
     const cleanEmail =
       newTeacher.email.trim() || `${cleanName.toLowerCase().replace(/\s+/g, '.')}@cps.edu.in`;
-    const generatedId = `CPS-T-${130 + teachers.length}`;
+    const generatedFallbackId = `CPS-T-${130 + teachers.length}`;
+    const finalEmployeeId = newTeacher.assignedEmployeeId.trim() || generatedFallbackId;
+    const finalPassword = newTeacher.assignedPassword.trim() || 'Teacher@123';
 
     const created = addTeacher({
-      employeeId: generatedId,
+      employeeId: finalEmployeeId,
       name: cleanName,
       email: cleanEmail,
       role: 'teacher',
@@ -83,7 +89,7 @@ export const AdminTeachers: React.FC = () => {
       ],
       leaveBalance: { casual: 8, medical: 12, duty: 5 },
       isNewlyJoined: true,
-      password: 'Teacher@123'
+      password: finalPassword
     });
 
     setIsAddTeacherOpen(false);
@@ -92,7 +98,7 @@ export const AdminTeachers: React.FC = () => {
       employeeId: created.employeeId,
       email: created.email,
       department: created.department,
-      password: 'Teacher@123'
+      password: finalPassword
     });
 
     // Reset form
@@ -104,12 +110,22 @@ export const AdminTeachers: React.FC = () => {
       email: '',
       assignedClass: '10',
       assignedSection: 'A',
-      subject: 'Mathematics'
+      subject: 'Mathematics',
+      assignedEmployeeId: `CPS-T-${132 + teachers.length}`,
+      assignedPassword: 'Teacher@123'
     });
   };
 
   return (
     <div className="space-y-6">
+      {/* Toast Notification */}
+      {toastMsg && (
+        <div className="fixed top-6 right-6 z-50 bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-2 animate-in fade-in duration-150">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>{toastMsg}</span>
+        </div>
+      )}
+
       {/* Success Notice Card upon teacher appointment */}
       {successNotice && (
         <div className="p-5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-blue-950 dark:text-blue-100 shadow-md relative animate-in fade-in duration-200">
@@ -131,16 +147,32 @@ export const AdminTeachers: React.FC = () => {
                 </span>
               </h4>
               <p className="text-xs text-blue-800 dark:text-blue-300">
-                <strong>{successNotice.name}</strong> appointed to <strong>Department of {successNotice.department}</strong>. Portal credentials provisioned:
+                <strong>{successNotice.name}</strong> appointed to <strong>Department of {successNotice.department}</strong>. Give these credentials to the faculty member to enter this website:
               </p>
-              <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono">
-                <span className="bg-white/80 dark:bg-slate-900/80 px-2.5 py-1 rounded-md border border-blue-300 dark:border-blue-700 text-blue-900 dark:text-blue-200">
-                  Employee ID: <strong>{successNotice.employeeId}</strong> (or {successNotice.email})
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs font-mono">
+                <span className="bg-white/90 dark:bg-slate-900/90 px-3 py-1.5 rounded-lg border border-blue-300 dark:border-blue-700 text-blue-900 dark:text-blue-200">
+                  Employee ID: <strong>{successNotice.employeeId}</strong>
                 </span>
-                <span className="bg-white/80 dark:bg-slate-900/80 px-2.5 py-1 rounded-md border border-blue-300 dark:border-blue-700 text-blue-900 dark:text-blue-200">
+                <span className="bg-white/90 dark:bg-slate-900/90 px-3 py-1.5 rounded-lg border border-blue-300 dark:border-blue-700 text-blue-900 dark:text-blue-200">
                   Password: <strong>{successNotice.password}</strong>
                 </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard?.writeText(
+                      `Chennai Public School Faculty Portal Access\nFaculty Name: ${successNotice.name}\nEmployee ID: ${successNotice.employeeId}\nPassword: ${successNotice.password}\nPortal Link: /login`
+                    );
+                    setToastMsg('Credentials copied to clipboard! Share with the teacher.');
+                    setTimeout(() => setToastMsg(null), 3000);
+                  }}
+                  className="px-2.5 py-1.5 bg-blue-700 text-white rounded-lg text-xs font-sans font-semibold hover:bg-blue-800 transition-colors cursor-pointer"
+                >
+                  Copy Credentials
+                </button>
               </div>
+              <p className="text-[11px] text-blue-700 dark:text-blue-400 pt-1">
+                ℹ️ The teacher can enter the website using this ID and Password, and then freely change their profile details and password in Profile Settings.
+              </p>
             </div>
           </div>
         </div>
@@ -149,14 +181,18 @@ export const AdminTeachers: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
-            Faculty Master · Administrator Access
-          </span>
-          <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-0.5">
-            Teacher Faculty & Leave Management ({teachers.length})
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-[11px] font-bold uppercase tracking-wider text-blue-700 dark:text-blue-300">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Admin Staff Authorization · Full Teacher Faculty ID Inspection Rights</span>
+          </div>
+          <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-1.5 flex items-center gap-2">
+            <span>Teacher Faculty & Leave Management</span>
+            <span className="text-base font-mono px-2.5 py-0.5 rounded-lg bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200">
+              {teachers.length} Active Teachers
+            </span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Active instructional faculties across academic departments. Administrators can appoint newly joined teachers.
+            As school admin staff, you have complete rights to inspect all <strong>30 faculty teachers' IDs</strong> (e.g. <code className="font-mono text-blue-700 dark:text-blue-300">CPS-T-101</code> through <code className="font-mono text-blue-700 dark:text-blue-300">CPS-T-130</code>), assigned classes, qualifications, leave quotas, and onboard newly joined teachers.
           </p>
         </div>
 
@@ -493,14 +529,49 @@ export const AdminTeachers: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-[11px] text-blue-800 dark:text-blue-300 space-y-1">
-                <p className="font-semibold flex items-center gap-1.5">
-                  <Key className="w-3.5 h-3.5" />
-                  <span>Automatic Faculty Credentials Generation:</span>
+              {/* Admin Assigned Credentials for the Faculty Member */}
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200 font-semibold text-xs">
+                  <Key className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  <span>Institutional Login Credentials (Assigned by Admin)</span>
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  The Admin sets the Teacher ID and Password below. Give these to the newly joined faculty member so they can enter the website. After logging in, the teacher can freely change their profile dossier and update their password.
                 </p>
-                <p>
-                  Upon appointment, a unique Employee ID will be generated and Teacher Portal access will be activated immediately with password <code>Teacher@123</code>.
-                </p>
+
+                <div className="grid grid-cols-2 gap-3 pt-1">
+                  <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1 text-[11px]">
+                      Teacher Employee ID *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={newTeacher.assignedEmployeeId}
+                      onChange={(e) =>
+                        setNewTeacher({ ...newTeacher, assignedEmployeeId: e.target.value })
+                      }
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-mono text-xs text-slate-900 dark:text-white"
+                      placeholder="e.g. CPS-T-131"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1 text-[11px]">
+                      Entry Password *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={newTeacher.assignedPassword}
+                      onChange={(e) =>
+                        setNewTeacher({ ...newTeacher, assignedPassword: e.target.value })
+                      }
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-mono text-xs text-slate-900 dark:text-white"
+                      placeholder="e.g. Teacher@123"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="flex justify-end gap-3 pt-2">

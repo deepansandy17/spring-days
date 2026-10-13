@@ -20,15 +20,27 @@ interface StudentDashboardProps {
 }
 
 export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigate }) => {
-  const { currentStudent, timetable, assignments, submissions, marks, announcements, events } = useSchool();
+  const {
+    currentUser,
+    currentStudent,
+    timetable,
+    assignments,
+    submissions,
+    marks,
+    announcements,
+    events
+  } = useSchool();
   const [isReportOpen, setIsReportOpen] = useState(false);
 
+  const activeStudent =
+    currentUser && currentUser.role === 'student' ? (currentUser as any) : currentStudent;
+
   // Stats calculation
-  const studentSubmissions = submissions.filter((s) => s.studentId === currentStudent.id);
+  const studentSubmissions = submissions.filter((s) => s.studentId === activeStudent.id);
   const submittedIds = new Set(studentSubmissions.map((s) => s.assignmentId));
   const pendingAssignments = assignments.filter((a) => !submittedIds.has(a.id));
 
-  const studentMarks = marks.filter((m) => m.studentId === currentStudent.id);
+  const studentMarks = marks.filter((m) => m.studentId === activeStudent.id);
   const avgScore =
     studentMarks.length > 0
       ? (studentMarks.reduce((sum, m) => sum + m.total, 0) / studentMarks.length).toFixed(1)
@@ -39,18 +51,36 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigate }
 
   return (
     <div className="space-y-6">
+      {/* Newly Joined Student Welcome Banner */}
+      {activeStudent.isNewlyJoined && (
+        <div className="p-4 rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800 text-sky-950 dark:text-sky-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-2.5 text-xs">
+            <span className="w-2 h-2 rounded-full bg-sky-500 animate-ping shrink-0" />
+            <p>
+              <strong>Newly Enrolled Account:</strong> Welcome to CPS! You signed in with your admin-assigned Student ID ({activeStudent.studentId}). You can now customize your profile details and set your personal password.
+            </p>
+          </div>
+          <button
+            onClick={() => onNavigate('/student/profile')}
+            className="px-3 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-lg text-xs font-semibold shrink-0 transition-colors cursor-pointer"
+          >
+            Update Profile & Password →
+          </button>
+        </div>
+      )}
+
       {/* Welcome Banner */}
       <div className="rounded-2xl p-6 sm:p-8 bg-gradient-to-r from-sky-900 via-slate-900 to-indigo-950 text-white relative overflow-hidden shadow-lg border border-sky-800/40">
         <div className="relative z-10 max-w-2xl space-y-2">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-white/10 text-xs font-medium text-sky-200">
-            <span>Grade {currentStudent.class}-{currentStudent.section}</span>
+            <span>Grade {activeStudent.class}-{activeStudent.section}</span>
             <span>·</span>
-            <span>Roll #{currentStudent.rollNo}</span>
+            <span>Roll #{activeStudent.rollNo}</span>
             <span>·</span>
             <span>Academic Term 1</span>
           </div>
           <h1 className="font-display font-bold text-2xl sm:text-3xl text-white">
-            Good Morning, {currentStudent.name} 👋
+            Good Morning, {activeStudent.name} 👋
           </h1>
           <p className="text-xs sm:text-sm text-sky-200/90 leading-relaxed">
             Welcome to your CPS SmartHub. You have {pendingAssignments.length} pending assignment{pendingAssignments.length === 1 ? '' : 's'} and your next class begins at 09:00 AM in Room 304.

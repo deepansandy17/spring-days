@@ -717,25 +717,83 @@ export const SchoolProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   const updateStudentProfile = (updates: Partial<StudentProfile>) => {
+    const targetId =
+      currentUser && currentUser.role === 'student' ? currentUser.id : currentStudent.id;
+
+    setStudents((all) =>
+      all.map((s) => {
+        if (s.id === targetId) {
+          return { ...s, ...updates };
+        }
+        return s;
+      })
+    );
+
     setCurrentStudent((prev) => {
-      const updated = { ...prev, ...updates };
-      setStudents((all) => all.map((s) => (s.id === updated.id ? updated : s)));
-      if (currentUser?.id === updated.id) {
-        setCurrentUser(updated);
+      if (prev.id === targetId) {
+        return { ...prev, ...updates };
       }
-      return updated;
+      return prev;
     });
+
+    if (currentUser && currentUser.role === 'student' && currentUser.id === targetId) {
+      setCurrentUser((curr) => (curr ? ({ ...curr, ...updates } as any) : null));
+    }
+
+    const notif: NotificationItem = {
+      id: `notif-${Date.now()}`,
+      userId: targetId,
+      targetRole: 'student',
+      title: updates.password ? 'Password Changed Successfully' : 'Profile Updated',
+      message: updates.password
+        ? 'Your student portal security password has been changed.'
+        : 'Your personal information was updated.',
+      timestamp: 'Just now',
+      type: 'general',
+      read: false,
+      actionUrl: '/student/profile'
+    };
+    setNotifications((prev) => [notif, ...prev]);
   };
 
   const updateTeacherProfile = (updates: Partial<TeacherProfile>) => {
+    const targetId =
+      currentUser && currentUser.role === 'teacher' ? currentUser.id : currentTeacher.id;
+
+    setTeachers((all) =>
+      all.map((t) => {
+        if (t.id === targetId) {
+          return { ...t, ...updates };
+        }
+        return t;
+      })
+    );
+
     setCurrentTeacher((prev) => {
-      const updated = { ...prev, ...updates };
-      setTeachers((all) => all.map((t) => (t.id === updated.id ? updated : t)));
-      if (currentUser?.id === updated.id) {
-        setCurrentUser(updated);
+      if (prev.id === targetId) {
+        return { ...prev, ...updates };
       }
-      return updated;
+      return prev;
     });
+
+    if (currentUser && currentUser.role === 'teacher' && currentUser.id === targetId) {
+      setCurrentUser((curr) => (curr ? ({ ...curr, ...updates } as any) : null));
+    }
+
+    const notif: NotificationItem = {
+      id: `notif-${Date.now()}`,
+      userId: targetId,
+      targetRole: 'teacher',
+      title: updates.password ? 'Password Changed Successfully' : 'Profile Updated',
+      message: updates.password
+        ? 'Your teacher portal security password has been changed.'
+        : 'Your faculty profile information was updated.',
+      timestamp: 'Just now',
+      type: 'general',
+      read: false,
+      actionUrl: '/teacher/profile'
+    };
+    setNotifications((prev) => [notif, ...prev]);
   };
 
   const addTimetableSlot = (slot: Omit<TimetableSlot, 'id'>) => {

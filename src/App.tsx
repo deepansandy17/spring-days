@@ -43,8 +43,6 @@ import { AdminFees } from './pages/admin/AdminFees';
 import { AdminAnnouncements } from './pages/admin/AdminAnnouncements';
 import { AdminEventsGallery } from './pages/admin/AdminEventsGallery';
 import { AdminAdmissions } from './pages/admin/AdminAdmissions';
-import { AdminReports } from './pages/admin/AdminReports';
-import { AdminUserManagement } from './pages/admin/AdminUserManagement';
 
 import { ShieldAlert, ArrowRight, ShieldCheck, Eye } from 'lucide-react';
 
@@ -286,7 +284,7 @@ const AppContent: React.FC = () => {
         );
       }
 
-      // Admin routes
+      // Admin routes (Master Timetable, Reports & Analytics, and Roles & Permissions deleted per requirement)
       switch (currentPath) {
         case '/admin/dashboard':
           return <AdminDashboard onNavigate={navigate} />;
@@ -300,8 +298,6 @@ const AppContent: React.FC = () => {
           return <AdminAttendance />;
         case '/admin/exams':
           return <AdminExams />;
-        case '/admin/timetable':
-          return <TeacherTimetable />;
         case '/admin/fees':
           return <AdminFees />;
         case '/admin/announcements':
@@ -310,10 +306,6 @@ const AppContent: React.FC = () => {
           return <AdminEventsGallery />;
         case '/admin/admissions':
           return <AdminAdmissions />;
-        case '/admin/reports':
-          return <AdminReports />;
-        case '/admin/roles':
-          return <AdminUserManagement />;
         default:
           return <AdminDashboard onNavigate={navigate} />;
       }

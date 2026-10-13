@@ -249,6 +249,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({
               </div>
             </div>
 
+            <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed space-y-1">
+              <p className="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                <span>Newly Joined Student or Faculty Member?</span>
+              </p>
+              <p>
+                Sign in with the institutional ID and initial password given to you by School Administration (e.g. <code>CPS-2026-...</code> or <code>CPS-T-...</code>). After logging in, you can update your profile details and personal password anytime in Account Settings.
+              </p>
+            </div>
+
             <div className="flex items-center justify-between text-xs pt-1">
               <label className="flex items-center gap-2 cursor-pointer select-none">
                 <input

@@ -82,21 +82,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { label: 'Profile', icon: User, path: '/teacher/profile' }
   ];
 
-  // Admin Nav Items
+  // Admin Nav Items (Master Timetable, Reports & Analytics, and Roles & Permissions removed)
   const adminItems: NavItem[] = [
     { label: 'Dashboard Overview', icon: LayoutDashboard, path: '/admin/dashboard' },
-    { label: 'Students Directory', icon: Users, path: '/admin/students' },
-    { label: 'Teacher Faculty', icon: GraduationCap, path: '/admin/teachers' },
+    { label: 'Students Directory (500)', icon: Users, path: '/admin/students' },
+    { label: 'Teacher Faculty (30)', icon: GraduationCap, path: '/admin/teachers' },
     { label: 'Classes & Sections', icon: Layers, path: '/admin/classes' },
     { label: 'School Attendance', icon: CheckSquare, path: '/admin/attendance' },
     { label: 'Academics & Exams', icon: Award, path: '/admin/exams' },
-    { label: 'Master Timetable', icon: Clock, path: '/admin/timetable' },
     { label: 'Fee Management', icon: DollarSign, path: '/admin/fees' },
     { label: 'Announcements', icon: Bell, path: '/admin/announcements' },
     { label: 'Events & Calendar', icon: Calendar, path: '/admin/events' },
-    { label: 'Admissions Desk', icon: UserPlus, path: '/admin/admissions' },
-    { label: 'Reports & Analytics', icon: FileSpreadsheet, path: '/admin/reports' },
-    { label: 'Roles & Permissions', icon: Shield, path: '/admin/roles' }
+    { label: 'Admissions Desk', icon: UserPlus, path: '/admin/admissions' }
   ];
 
   const items = role === 'student' ? studentItems : role === 'teacher' ? teacherItems : adminItems;

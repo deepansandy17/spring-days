@@ -48,10 +48,12 @@ export const AdminStudents: React.FC = () => {
     gender: 'Male',
     bloodGroup: 'B+',
     parentName: '',
-    parentPhone: '+91 98401 ',
+    parentPhone: '+91 98401 33445',
     parentEmail: '',
     address: 'Anna Nagar West, Chennai - 600040',
-    previousSchool: 'DAV Senior Secondary School, Chennai'
+    previousSchool: 'DAV Senior Secondary School, Chennai',
+    assignedStudentId: 'CPS-2026-10A46',
+    assignedPassword: 'Student@123'
   });
 
   // Filter directly from context students
@@ -76,12 +78,14 @@ export const AdminStudents: React.FC = () => {
 
     const cleanName = newStudent.name.trim();
     const cleanEmail = `${cleanName.toLowerCase().replace(/\s+/g, '.')}@cps.edu.in`;
-    const generatedId = `CPS-2026-${newStudent.class.padStart(2, '0')}${newStudent.section}${String(
+    const generatedFallbackId = `CPS-2026-${newStudent.class.padStart(2, '0')}${newStudent.section}${String(
       newStudent.rollNo
     ).padStart(2, '0')}`;
+    const finalStudentId = newStudent.assignedStudentId.trim() || generatedFallbackId;
+    const finalPassword = newStudent.assignedPassword.trim() || 'Student@123';
 
     const created = addStudent({
-      studentId: generatedId,
+      studentId: finalStudentId,
       name: cleanName,
       email: cleanEmail,
       role: 'student',
@@ -102,7 +106,7 @@ export const AdminStudents: React.FC = () => {
       feesDue: 0,
       feesPaid: 65000,
       isNewlyJoined: true,
-      password: 'Student@123'
+      password: finalPassword
     });
 
     setIsAddOpen(false);
@@ -111,15 +115,16 @@ export const AdminStudents: React.FC = () => {
       studentId: created.studentId,
       email: created.email,
       grade: `Grade ${created.class}-${created.section} (Roll #${created.rollNo})`,
-      password: 'Student@123'
+      password: finalPassword
     });
 
-    // Reset form
+    // Reset form with incremented next student defaults
+    const nextRoll = (Number(newStudent.rollNo) || 46) + 1;
     setNewStudent({
       name: '',
       class: '10',
       section: 'A',
-      rollNo: newStudent.rollNo + 1,
+      rollNo: nextRoll,
       dob: '2010-08-15',
       gender: 'Male',
       bloodGroup: 'B+',
@@ -127,7 +132,9 @@ export const AdminStudents: React.FC = () => {
       parentPhone: '+91 98401 ',
       parentEmail: '',
       address: 'Anna Nagar West, Chennai - 600040',
-      previousSchool: 'DAV Senior Secondary School, Chennai'
+      previousSchool: 'DAV Senior Secondary School, Chennai',
+      assignedStudentId: `CPS-2026-10A${nextRoll}`,
+      assignedPassword: 'Student@123'
     });
   };
 
@@ -167,16 +174,32 @@ export const AdminStudents: React.FC = () => {
                 </span>
               </h4>
               <p className="text-xs text-emerald-800 dark:text-emerald-300">
-                <strong>{successNotice.name}</strong> has been enrolled in <strong>{successNotice.grade}</strong>. Login credentials have been provisioned:
+                <strong>{successNotice.name}</strong> enrolled in <strong>{successNotice.grade}</strong>. Give these credentials to the student to enter this website:
               </p>
-              <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono">
-                <span className="bg-white/80 dark:bg-slate-900/80 px-2.5 py-1 rounded-md border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200">
-                  Login ID: <strong>{successNotice.studentId}</strong> (or {successNotice.email})
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs font-mono">
+                <span className="bg-white/90 dark:bg-slate-900/90 px-3 py-1.5 rounded-lg border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200">
+                  Login ID: <strong>{successNotice.studentId}</strong>
                 </span>
-                <span className="bg-white/80 dark:bg-slate-900/80 px-2.5 py-1 rounded-md border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200">
+                <span className="bg-white/90 dark:bg-slate-900/90 px-3 py-1.5 rounded-lg border border-emerald-300 dark:border-emerald-700 text-emerald-900 dark:text-emerald-200">
                   Password: <strong>{successNotice.password}</strong>
                 </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard?.writeText(
+                      `Chennai Public School Student Portal Access\nStudent Name: ${successNotice.name}\nStudent ID: ${successNotice.studentId}\nPassword: ${successNotice.password}\nPortal Link: /login`
+                    );
+                    setToastMsg('Credentials copied to clipboard! Share with the student.');
+                    setTimeout(() => setToastMsg(null), 3000);
+                  }}
+                  className="px-2.5 py-1.5 bg-emerald-700 text-white rounded-lg text-xs font-sans font-semibold hover:bg-emerald-800 transition-colors cursor-pointer"
+                >
+                  Copy Credentials
+                </button>
               </div>
+              <p className="text-[11px] text-emerald-700 dark:text-emerald-400 pt-1">
+                ℹ️ The student can enter the website using this ID and Password, and then freely change their profile details and password in Profile Settings.
+              </p>
             </div>
           </div>
         </div>
@@ -185,14 +208,18 @@ export const AdminStudents: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
-            Registry Master · Administrator Access
-          </span>
-          <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-0.5">
-            Student Information & Directory ({students.length})
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 text-[11px] font-bold uppercase tracking-wider text-sky-700 dark:text-sky-300">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Admin Staff Authorization · Full Student ID Inspection Rights</span>
+          </div>
+          <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-1.5 flex items-center gap-2">
+            <span>Student Information & Registry</span>
+            <span className="text-base font-mono px-2.5 py-0.5 rounded-lg bg-sky-100 dark:bg-sky-900/60 text-sky-800 dark:text-sky-200">
+              {students.length} Total Students
+            </span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Complete institutional enrollment registry across Grades 6 through 12. Administrators can add newly joined students.
+            As school admin staff, you have authorized rights to inspect all <strong>500 students' IDs</strong> (e.g. <code className="font-mono text-sky-700 dark:text-sky-300">CPS-2024-10A42</code>), contact phone numbers, parents' details, attendance records, and onboard newly joined students.
           </p>
         </div>
 
@@ -595,14 +622,49 @@ export const AdminStudents: React.FC = () => {
                 />
               </div>
 
-              <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800 text-[11px] text-sky-800 dark:text-sky-300 space-y-1">
-                <p className="font-semibold flex items-center gap-1.5">
-                  <Key className="w-3.5 h-3.5" />
-                  <span>Automatic Portal Credentials Generation:</span>
+              {/* Admin Assigned Credentials for the Student */}
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200 font-semibold text-xs">
+                  <Key className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                  <span>Institutional Login Credentials (Assigned by Admin)</span>
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                  The Admin sets the Student ID and Password below. Give these to the newly joined student so they can enter the website. After logging in, the student can freely change their profile details and update their password.
                 </p>
-                <p>
-                  Upon clicking Enroll, this student will be instantly assigned a unique institutional Student ID and activated for Student Portal login with default password <code>Student@123</code>.
-                </p>
+
+                <div className="grid grid-cols-2 gap-3 pt-1">
+                  <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1 text-[11px]">
+                      Student Login ID *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={newStudent.assignedStudentId}
+                      onChange={(e) =>
+                        setNewStudent({ ...newStudent, assignedStudentId: e.target.value })
+                      }
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-mono text-xs text-slate-900 dark:text-white"
+                      placeholder="e.g. CPS-2026-10A46"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-medium mb-1 text-[11px]">
+                      Entry Password *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={newStudent.assignedPassword}
+                      onChange={(e) =>
+                        setNewStudent({ ...newStudent, assignedPassword: e.target.value })
+                      }
+                      className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-mono text-xs text-slate-900 dark:text-white"
+                      placeholder="e.g. Student@123"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="flex justify-end gap-3 pt-2">
