@@ -28,8 +28,8 @@ export const TeacherTimetable: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs">
-        <span className="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+      <div className="p-6 rounded-2xl teacher-card-executive">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
           Faculty Schedule
         </span>
         <h2 className="font-display font-bold text-2xl text-slate-900 dark:text-white mt-0.5">
@@ -40,7 +40,7 @@ export const TeacherTimetable: React.FC = () => {
         </p>
       </div>
 
-      <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs overflow-x-auto">
+      <div className="p-6 rounded-2xl teacher-card-executive overflow-x-auto">
         <table className="w-full text-xs min-w-[700px]">
           <thead>
             <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-500">

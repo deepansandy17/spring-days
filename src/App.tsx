@@ -32,6 +32,7 @@ import { TeacherMaterials } from './pages/teacher/TeacherMaterials';
 import { TeacherCommunication } from './pages/teacher/TeacherCommunication';
 import { TeacherLeave } from './pages/teacher/TeacherLeave';
 import { TeacherProfile as TeacherProfilePage } from './pages/teacher/TeacherProfile';
+import { TeacherPortalContainer } from './components/teacher/TeacherPortalContainer';
 
 // Admin Pages
 import { AdminDashboard } from './pages/admin/AdminDashboard';
@@ -245,10 +246,10 @@ const AppContent: React.FC = () => {
       };
 
       return (
-        <>
+        <TeacherPortalContainer currentPath={currentPath} onNavigate={navigate}>
           {adminSupervisionBanner}
           {teacherView()}
-        </>
+        </TeacherPortalContainer>
       );
     }
 

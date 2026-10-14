@@ -163,3 +163,44 @@
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
+/* Scholastic & Executive Teacher Portal Styling */
+.font-serif-scholastic {
+  font-family: 'Newsreader', Georgia, Cambria, 'Times New Roman', serif;
+}
+
+.teacher-card-executive {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  box-shadow: 0 4px 16px -4px rgba(15, 23, 42, 0.05), 0 1px 3px 0 rgba(15, 23, 42, 0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .teacher-card-executive {
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.65);
+  box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.6);
+}
+
+.teacher-scholastic-grid {
+  background-size: 28px 28px;
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+}
+
+.dark .teacher-scholastic-grid {
+  background-size: 28px 28px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.teacher-parchment-pattern {
+  background-image: radial-gradient(rgba(180, 83, 9, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
